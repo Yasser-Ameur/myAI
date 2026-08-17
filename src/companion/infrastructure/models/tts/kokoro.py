@@ -24,7 +24,7 @@ class KokoroTTSProvider(BaseAdapter):
         super().__init__(config, model_id)
         self.require(
             "kokoro_onnx",
-            "kokoro-onnx is not installed. Run: pip install 'human-companion[tts]'",
+            "kokoro-onnx is not installed. Run: pip install 'myai[tts]'",
         )
         self._kokoro = None
         self._voices = None
@@ -49,7 +49,7 @@ class KokoroTTSProvider(BaseAdapter):
             import soundfile  # noqa: F401  (ensures kokoro deps present)
         except ImportError as exc:
             raise ProviderNotAvailableError(
-                "kokoro-onnx is not installed. Run: pip install 'human-companion[tts]'"
+                "kokoro-onnx is not installed. Run: pip install 'myai[tts]'"
             ) from exc
 
         model_path = self._params.get("path") or self._params.get("model_path")
@@ -102,7 +102,7 @@ class PiperTTSProvider(BaseAdapter):
             import piper
         except ImportError as exc:
             raise ProviderNotAvailableError(
-                "piper-tts is not installed. Run: pip install 'human-companion[tts]'"
+                "piper-tts is not installed. Run: pip install 'myai[tts]'"
             ) from exc
         model_path = self._params.get("path") or self._params.get("model_path")
         if not model_path:

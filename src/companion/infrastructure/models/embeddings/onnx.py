@@ -75,7 +75,7 @@ class OnnxEmbeddingProvider(BaseAdapter):
         super().__init__(config, model_id)
         self.require(
             "onnxruntime",
-            "onnxruntime is not installed. Run: pip install 'human-companion[embeddings]'",
+            "onnxruntime is not installed. Run: pip install 'myai[embeddings]'",
         )
         self.dimension = int(config.get("dimension", 384))
         self._session = None
@@ -86,7 +86,7 @@ class OnnxEmbeddingProvider(BaseAdapter):
             import onnxruntime as ort
         except ImportError as exc:
             raise ProviderNotAvailableError(
-                "onnxruntime is not installed. Run: pip install 'human-companion[embeddings]'"
+                "onnxruntime is not installed. Run: pip install 'myai[embeddings]'"
             ) from exc
         model_path = self._params.get("path") or self._params.get("model_path")
         if not model_path:

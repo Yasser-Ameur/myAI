@@ -1,69 +1,143 @@
-# Human Companion
+# myAI
 
-A local-first, offline, modular cognitive AI companion in Python.
+Local-first multimodal cognitive AI companion with persistent temporal memory,
+probabilistic personality, agent identity, modular skills and tools, local model
+adapters, voice, vision and expressive embodiment.
 
-It remembers what you tell it (temporal knowledge graph + hybrid retrieval),
-builds a probabilistic model of your personality and its own, adapts its
-communication style, and can speak and express itself through a face avatar —
-all on CPU, all configurable, with no cloud dependency.
+Everything runs on your machine. No cloud, no telemetry, no accounts.
 
-## Highlights
+## What it does
 
-- **Clean architecture** — `core` / `domain` / `application` / `infrastructure` /
-  `interfaces` / `runtime`. Application code never imports concrete providers.
-- **Persistent identity** — name it once and it stays named, across restarts.
+- **Remembers** what you tell it across sessions using a temporal knowledge
+  graph (SQLite) with hybrid retrieval (lexical + semantic + graph + recency
+  + importance + confidence).
+- **Learns your personality** through a probabilistic evidence-based model
+  with traits, values, preferences, contradiction tracking, and communication
+  style adaptation.
+- **Keeps an identity** you name once and it stays named, across restarts.
   Renaming keeps the old name queryable; a hedged guess cannot overwrite a
   stated identity.
-- **Memory graph** — SQLite-backed episodic memory, semantic facts, goals,
-  relationships and knowledge chunks with temporal validity. History is never
-  silently deleted; updates invalidate rather than overwrite. Salient facts
-  commit per turn, so an ungraceful exit loses nothing.
-- **Skills and tools** — bounded, declared capabilities with default-deny
-  permissions, typed tool manifests, timeouts and confirmation gating for
-  side effects. "What can you do?" is answered from the live registry.
-- **Hybrid retrieval** — lexical (informative-token matching) + semantic
-  (embeddings) + graph + recency + importance + confidence, with reranking.
-- **Probabilistic personality** — evidence-based `PersonalityProfile` with
-  traits / values / preferences, contradiction tracking, and behavioral
-  communication-preference learning.
-- **Model adapters** — LLM, STT, TTS, VAD, vision, embeddings selected by
-  config only. Every optional dependency degrades to a deterministic fallback
-  with a clear warning; the system runs with zero model weights installed.
-- **Runtime services** — hardware profiling, memory guard, scheduler, metrics,
-  benchmark, model installer, HTTP API, interactive CLI.
+- **Routes exact questions to skills** before hitting the model: arithmetic,
+  datetime, identity recall, goal management, provenance, diagnostics.
+- **Runs locally** with replaceable model adapters for LLM, STT, TTS, VAD,
+  vision and embeddings — every slot degrades to a deterministic fallback
+  when a provider is missing.
 
-## Install
+## Why it is different
 
-```powershell
+This is not a chatbot wrapper. It is a cognitive architecture:
+
+- **Durable memory** — salient facts commit per turn (~1 ms, no model), so
+  an ungraceful exit loses nothing. Consolidation runs at idle for subtler
+  extractions.
+- **Supersession, not overwrite** — changing a fact closes the old row and
+  inserts a new one. History is never silently deleted.
+- **Hallucinated-memory defence** — every LLM extraction must be traceable
+  to the user's own words. Ungrounded extractions are dropped.
+- **Default-deny skills** — a skill gets only what its manifest declares
+  and the config grants. No shell, no eval, no side effects without
+  confirmation.
+- **Honest benchmarks** — fallback performance is always labelled
+  `SIMULATED`; real model performance is labelled `REAL`.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────┐
+│  interfaces/    CLI (14 subcommands) + HTTP API  │
+├─────────────────────────────────────────────────┤
+│  runtime/       Orchestration, config, hardware, │
+│                 memory guard, scheduler, metrics  │
+├─────────────────────────────────────────────────┤
+│  application/   Conversation, memory pipeline,   │
+│                 extraction, personality, retrieval │
+│                 identity, salience, facts         │
+├─────────────────────────────────────────────────┤
+│  domain/        Pure data: Entity, Fact, Memory,  │
+│                 PersonalityProfile, Relationship, │
+│                 UserState, AgentState             │
+├─────────────────────────────────────────────────┤
+│  core/          Protocols, events, ids, clock,    │
+│                 errors, types                     │
+└─────────────────────────────────────────────────┘
+         ↕ contracts (Protocols)
+┌─────────────────────────────────────────────────┐
+│  infrastructure/  SQLite graph, vector store,     │
+│                   model adapters (LLM, STT, TTS,  │
+│                   VAD, vision, embeddings)         │
+└─────────────────────────────────────────────────┘
+```
+
+Application code never imports concrete providers. Every optional dependency
+degrades gracefully to a deterministic mock fallback with a clear warning.
+
+## Skills
+
+Bounded, declared, permissioned capabilities with default-deny access:
+
+| Skill | What it does | Permissions |
+|-------|-------------|-------------|
+| `identity` | Name and history | `memory.read` |
+| `recall` | Current and historical facts | `memory.read` |
+| `provenance` | Why I believe something | `memory.read` |
+| `goals` | Goal management | `memory.read`, `memory.write` |
+| `capabilities` | What I can do | — |
+| `diagnostics` | Health and status | `runtime.inspect` |
+| `calculator` | Exact arithmetic (AST whitelist) | — |
+| `datetime` | Current date and time | — |
+
+See `docs/skills.md` for writing your own.
+
+## Hardware
+
+Targets a modest CPU laptop with shared-memory iGPU — no discrete GPU
+required. Profiles: `ultra_low` (8 GB), `balanced` (16 GB), `performance`,
+`gpu`, `auto`. The memory guard enforces a RAM budget and unloads models
+under pressure.
+
+Measured on Intel Core i7-1185G7 @ 3.00 GHz, 16 GB RAM, Intel Iris Xe,
+CPU-only execution: Qwen3-1.7B q4_k_m at ~10 tok/s, LLM turn ~4.2 s,
+retrieval 7 ms, process RSS 3.8 GB.
+
+## Installation
+
+```bash
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+source .venv/bin/activate   # or .venv\Scripts\Activate on Windows
 pip install -e .
 pip install -e ".[dev]"
 ```
 
-Runs with no models at all (fallback mocks, fully deterministic):
+Runs with no models installed (fallback mocks, fully deterministic):
 
-```powershell
+```bash
 companion run
 ```
 
-Add real models per modality (see `docs/models.md` for offline install):
+### Model installation
 
-```powershell
-pip install "human-companion[llm]"      # llama-cpp-python
-pip install "human-companion[stt]"      # faster-whisper
-pip install "human-companion[tts]"      # kokoro-onnx + soundfile + piper-tts
-pip install "human-companion[embeddings]"
-pip install "human-companion[vad]"      # onnxruntime
-pip install "human-companion[vision]"   # mediapipe
+Models are downloaded on demand. No weights are shipped with the repository.
 
+```bash
+# Install optional provider dependencies
+pip install -e ".[llm]"       # llama-cpp-python
+pip install -e ".[stt]"       # faster-whisper
+pip install -e ".[tts]"       # kokoro-onnx, soundfile, piper-tts
+pip install -e ".[embeddings]"
+pip install -e ".[vad]"       # onnxruntime
+pip install -e ".[vision]"    # mediapipe
+
+# Download and verify models
 companion models list
 companion models install qwen3-1.7b whisper-base kokoro-82m bge-small-en silero-vad face-landmarker
 ```
 
+See `docs/models.md` and `docs/replacing-models.md` for offline install and
+swapping in your own models per slot.
+
 ## Quick start
 
-```powershell
+```bash
 companion doctor                 # environment + hardware + slots
 companion run                    # interactive REPL (stdin, no models needed)
 companion api                    # HTTP API on http://127.0.0.1:8377
@@ -82,7 +156,7 @@ companion models install qwen3-1.7b   # download and verify a model
 
 ## Does it actually remember?
 
-```powershell
+```bash
 companion run
 you> You are Jarvis.
 you> My favorite color is purple.
@@ -108,38 +182,36 @@ numbers and `docs/system-map.md` for what is verified versus assumed.
 | GET    | `/runtime`  | hardware profile, slots, personality |
 | POST   | `/chat`     | `{"text": "...", "source": "text"}`  |
 
-## Layout
+## Configuration
 
-```
-src/companion/
-  core/            contracts, events, ids, types, clock, errors
-  domain/          graph, memory, conversation, personality, relationship, state, agent
-  application/     perception, extraction, memory, retrieval, personality, conversation,
-                   reflection, avatar, speech_output, ports,
-                   facts (durable writes), identity (self-model), salience (turn commit)
-  skills/          base, permissions, registry, router, builtin/
-  tools/           base, registry, builtin
-  infrastructure/  storage, sqlite_graph, vector, models/ (adapters + registry)
-  interfaces/      cli, api
-  runtime/         config, hardware, scheduler, memory_guard, metrics, orchestration,
-                   benchmarks, model_installer, portability
-config/companion.yaml    all provider/model/tuning selection
-models/manifest.json     offline model catalog
-tests/                   unit / integration / simulation suites
-```
+All provider and model selection lives in `config/companion.yaml`. Application
+code never hard-codes a model name. Environment variables can override any
+value.
 
-## Tests
+## Privacy
 
-```powershell
+- Cloud is disabled by default (`privacy.cloud_enabled: false`).
+- Telemetry is off (`privacy.telemetry: false`).
+- The API server binds to `127.0.0.1` only.
+- All data stays in `data/cognitive.db` on your machine.
+- You can export and audit your entire cognitive state:
+  `companion data export ./backup`.
+
+## Testing
+
+```bash
 python -m pytest tests -q
 python -m ruff check src tests
 ```
 
+146 tests covering unit, integration and simulation suites. The E2E durability
+tests (`COMPANION_E2E=1`) run real subprocess restarts to verify memory
+survives process termination.
+
 ## Documentation
 
 - `docs/architecture.md` — layers, data flow, event bus, runtime components
-- `docs/system-map.md` — per-subsystem state, failure modes, and what is
-  actually verified versus assumed
+- `docs/system-map.md` — per-subsystem state, failure modes, verification status
 - `docs/memory.md` — durability model, episode pipeline, supersession,
   hallucinated-memory defence
 - `docs/identity.md` — identity authority, renaming, name history
@@ -150,3 +222,26 @@ python -m ruff check src tests
 - `docs/hardware.md` — profiles, RAM budget, Vulkan gating
 - `docs/replacing-models.md` — swap in your own models per slot
 - `docs/final-report.md` — status report with honest measured numbers
+
+## Known limitations
+
+- Voice, camera and avatar need real hardware; not verified end-to-end on
+  CI.
+- Generation is ~10 tok/s on CPU. Only a smaller model, shorter budget, or
+  GPU offload changes this.
+- Salient extraction is English-only.
+- The grounding filter is lexical — deliberately biased toward false
+  negatives.
+- Skill routing is regex-based; paraphrases fall through to the model.
+
+## Roadmap
+
+1. Verify the voice pipeline end-to-end on real hardware.
+2. French/mixed-language salient extraction.
+3. Longitudinal simulation for personality convergence.
+4. Move consolidation fully to idle-only budget.
+5. Document ingestion and notes skill.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

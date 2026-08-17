@@ -39,7 +39,7 @@ class WhisperSTTProvider(BaseAdapter):
         if self._backend == "faster_whisper":
             self.require(
                 "faster_whisper",
-                "faster-whisper is not installed. Run: pip install 'human-companion[stt]'",
+                "faster-whisper is not installed. Run: pip install 'myai[stt]'",
             )
         self._model = None
 
@@ -75,7 +75,7 @@ class WhisperSTTProvider(BaseAdapter):
             from faster_whisper import WhisperModel
         except ImportError as exc:
             raise ProviderNotAvailableError(
-                "faster-whisper is not installed. Run: pip install 'human-companion[stt]'"
+                "faster-whisper is not installed. Run: pip install 'myai[stt]'"
             ) from exc
         device = self._params.get("device", "cpu")
         compute_type = self._params.get("compute_type", "int8" if device == "cpu" else "float16")

@@ -177,7 +177,7 @@ def _download(url: str, dest: str, label: str, expected_bytes: int = 0) -> None:
     resumed = 0
     if os.path.exists(tmp):
         resumed = os.path.getsize(tmp)
-    headers = {"User-Agent": "human-companion/0.1"}
+    headers = {"User-Agent": "myai/0.1"}
     if resumed:
         headers["Range"] = f"bytes={resumed}-"
     req = urllib.request.Request(url, headers=headers)

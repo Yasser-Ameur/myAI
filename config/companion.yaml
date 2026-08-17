@@ -1,4 +1,4 @@
-# Human Companion default configuration.
+# myAI default configuration.
 # Every provider/model is selected here. Application code never hard-codes model names.
 system:
   mode: local            # local | hybrid (hybrid requires explicit cloud opt-in)

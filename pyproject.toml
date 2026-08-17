@@ -3,14 +3,15 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "human-companion"
+name = "myai"
 version = "0.1.0"
-description = "Local-first multimodal cognitive AI companion: perception, memory graph, personality, retrieval, conversation, voice and avatar."
+description = "Local-first multimodal cognitive AI companion with persistent memory, personality, skills, voice, vision and local model adapters."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "Human Project" }]
-keywords = ["ai", "local", "companion", "memory", "personality", "cognitive"]
+authors = [{ name = "Yasser Ameur" }]
+keywords = ["ai", "local-ai", "companion", "memory", "personality", "cognitive", "multimodal", "llm", "knowledge-graph"]
+
 
 dependencies = [
     "numpy>=1.26",

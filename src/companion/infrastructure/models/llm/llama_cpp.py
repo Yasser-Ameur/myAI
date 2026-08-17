@@ -35,7 +35,7 @@ class LlamaCppProvider(BaseAdapter):
         super().__init__(config, model_id)
         self.require(
             "llama_cpp",
-            "llama-cpp-python is not installed. Run: pip install 'human-companion[llm]'",
+            "llama-cpp-python is not installed. Run: pip install 'myai[llm]'",
         )
         self._llm = None
         self._params = self.config
@@ -65,7 +65,7 @@ class LlamaCppProvider(BaseAdapter):
             from llama_cpp import Llama
         except ImportError as exc:
             raise ProviderNotAvailableError(
-                "llama-cpp-python is not installed. Run: pip install 'human-companion[llm]'"
+                "llama-cpp-python is not installed. Run: pip install 'myai[llm]'"
             ) from exc
         if not self._path and not self._params.get("model_path"):
             raise ProviderNotAvailableError(

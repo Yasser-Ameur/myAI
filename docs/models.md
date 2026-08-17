@@ -50,13 +50,13 @@ skips existing files, and reports size/state.
 ## Dependency extras
 
 ```powershell
-pip install "human-companion[llm]"        # llama-cpp-python
-pip install "human-companion[stt]"        # faster-whisper
-pip install "human-companion[tts]"        # kokoro-onnx, soundfile, piper-tts
-pip install "human-companion[vad]"        # onnxruntime (+torch for some paths)
-pip install "human-companion[embeddings]" # onnxruntime
-pip install "human-companion[vision]"     # mediapipe
-pip install "human-companion[obs]"        # psutil for RAM probes
+pip install "myai[llm]"        # llama-cpp-python
+pip install "myai[stt]"        # faster-whisper
+pip install "myai[tts]"        # kokoro-onnx, soundfile, piper-tts
+pip install "myai[vad]"        # onnxruntime (+torch for some paths)
+pip install "myai[embeddings]" # onnxruntime
+pip install "myai[vision]"     # mediapipe
+pip install "myai[obs]"        # psutil for RAM probes
 ```
 
 ## Tuning knobs (config `providers:`)

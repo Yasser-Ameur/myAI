@@ -58,7 +58,7 @@ models:
 ```
 
 With `path`/`voices_path` you can use any Kokoro `.onnx` + voices bin pair. An
-alternative `piper` provider exists (`pip install "human-companion[tts]"`):
+alternative `piper` provider exists (`pip install "myai[tts]"`):
 set `provider: piper` with `model_path: <piper .onnx>`. Both return 16-bit PCM
 mono audio consumed by `application/speech_output.py`.
 

@@ -1,19 +1,54 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
 *.egg-info/
+**/*.egg-info/
 dist/
 build/
+*.egg
+
+# Testing / linting
 .pytest_cache/
 .ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
 .venv/
 venv/
+
+# Runtime data (personal cognitive state)
 data/*.db
 data/*.db-wal
 data/*.db-shm
 data/*.log
+data/*.jsonl
+
+# Model weights (large binaries; installed via companion models install)
 models/cache/*
 !models/cache/.gitkeep
 *.gguf
 *.bin
 *.onnx
+*.tflite
+*.task
+*.ct2
+
+# Environment / secrets
 .env
+.env.*
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -38,7 +38,7 @@ class MediaPipeFaceProvider(BaseAdapter):
         super().__init__(config, model_id)
         self.require(
             "mediapipe",
-            "mediapipe is not installed. Run: pip install 'human-companion[vision]'",
+            "mediapipe is not installed. Run: pip install 'myai[vision]'",
         )
         self._detector = None
         self._model_path = config.get("model_path", "")
@@ -56,7 +56,7 @@ class MediaPipeFaceProvider(BaseAdapter):
             import mediapipe as mp
         except ImportError as exc:
             raise ProviderNotAvailableError(
-                "mediapipe is not installed. Run: pip install 'human-companion[vision]'"
+                "mediapipe is not installed. Run: pip install 'myai[vision]'"
             ) from exc
         if not self._model_path:
             raise ProviderNotAvailableError(
