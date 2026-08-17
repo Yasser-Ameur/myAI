@@ -91,7 +91,11 @@ Run with real weights, in **separate OS processes**:
 
 ## Tests
 
-**148 passing, lint clean** (`ruff check src tests`).
+**146 passed, 2 skipped in 3.1 s; lint clean** (`ruff check src tests`).
+
+The 2 skipped are the real-model subprocess restart tests, which pass when run
+with `COMPANION_E2E=1` (verified; they take minutes because they load real
+weights three times). Default runs stay fast.
 
 - 98 pre-existing (unchanged, still green)
 - +29 skills/tools: permissions default-deny, manifest validation, API version
