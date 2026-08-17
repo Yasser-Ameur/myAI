@@ -1,0 +1,161 @@
+# Human Companion default configuration.
+# Every provider/model is selected here. Application code never hard-codes model names.
+system:
+  mode: local            # local | hybrid (hybrid requires explicit cloud opt-in)
+  locale: en
+  name: companion
+
+hardware:
+  profile: auto            # ultra_low | balanced | performance | gpu | custom | auto
+  cpu_threads: auto
+  gpu_acceleration: auto # auto | cpu | vulkan | cuda
+  benchmark_gate: true
+
+runtime:
+  memory:
+    total_ram_mb: auto
+    reserve_system_mb: 4096
+    max_ai_ram_mb: 8192
+  concurrency:
+    max_heavy_models_resident: 3
+    max_background_workers: 1
+    idle_unload_s: 300        # free heavy LLM/STT models after this long without a turn
+  perception:
+    face_fps: 10
+    camera_queue: 2
+    audio_queue: 10
+    memory_queue: 50
+    reflection_queue: 10
+  audio:
+    realtime: true
+    sample_rate: 16000
+    barge_in: true            # stop TTS the moment VAD hears the user start speaking
+  llm:
+    execution: cpu_first
+    gpu_layers: auto
+    threads: auto
+
+models:
+  llm:
+    default:
+      provider: llama_cpp
+      model_id: qwen3-1.7b
+      quantization: q4_k_m
+      reason: normal conversation
+    fast:
+      provider: llama_cpp
+      model_id: qwen3-0.6b
+      quantization: q4_0
+      reason: classification / extraction
+    reasoning:
+      provider: llama_cpp
+      model_id: qwen3-1.7b
+      quantization: q4_k_m
+      reason: explicit reasoning tasks (optional)
+  stt:
+    default:
+      provider: whisper
+      model_id: whisper-base
+      backend: faster_whisper
+      language: auto
+  tts:
+    default:
+      provider: kokoro
+      model_id: kokoro-82m
+      voice: ff_siwis
+  vision:
+    face:
+      provider: mediapipe
+      model_id: face-landmarker
+  embeddings:
+    default:
+      provider: onnx
+      model_id: bge-small-en
+      dimension: 384
+  vad:
+    default:
+      provider: silero
+      model_id: silero-vad
+
+conversation:
+  # rules | llm. LLM planning costs ~2.1s per turn on the target CPU and adds
+  # no measurable quality over the deterministic planner, so it is opt-in.
+  planner: rules
+
+memory:
+  database: data/cognitive.db
+  max_prompt_tokens: 3500
+  vector_index: sqlite_bruteforce   # sqlite_bruteforce | sqlite_vec | external
+  embedding_namespace: default
+  retrieval:
+    top_k: 8
+    rerank: true
+  consolidation:
+    min_idle_seconds: 180
+    max_runs_per_hour: 2
+    token_budget: 800
+
+context_budget:
+  total_tokens: 3500
+  current_state: 200
+  user_profile: 500
+  memory: 1200
+  episodes: 700
+  goals: 300
+  relationship: 300
+  agent_state: 200
+  task: 100
+
+personality:
+  update_mode: conservative   # conservative | balanced | responsive
+  max_evidence_per_trait: 200
+  decay_days: 180
+  adapt_communication: true
+
+skills:
+  # A skill gets only what is granted here. Default deny: anything not listed
+  # is refused, and the skill is registered as unavailable with the reason, so
+  # the companion can explain what it cannot do and why.
+  route_threshold: 0.6          # minimum can_handle() confidence to take a turn
+  default_grants:
+    - memory.read               # every skill may read the companion's memory
+  grants:
+    goals:
+      - memory.read
+      - memory.write
+    notes:
+      - memory.read
+      - memory.write
+    diagnostics:
+      - runtime.inspect
+  deny: {}                      # e.g. recall: [memory.read] to switch one off
+
+privacy:
+  cloud_enabled: false
+  telemetry: false
+  log_network_activity: true
+
+logging:
+  level: info
+  file: data/companion.log
+
+api:
+  host: 127.0.0.1
+  port: 8377
+
+providers:
+  llama_cpp:
+    lib: auto
+    n_batch: 256
+    n_ctx: 4096
+    enable_thinking: false        # Qwen3: keep responses direct, no chain-of-thought
+    strip_think_blocks: true      # safety net: drop <think>...</think> if it still appears
+  whisper_cpp:
+    n_threads: auto
+    beam_size: 1
+  kokoro:
+    device: cpu
+  silero:
+    onnx: true
+  onnx_embeddings:
+    device: cpu

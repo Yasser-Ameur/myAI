@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "human-companion"
+version = "0.1.0"
+description = "Local-first multimodal cognitive AI companion: perception, memory graph, personality, retrieval, conversation, voice and avatar."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Human Project" }]
+keywords = ["ai", "local", "companion", "memory", "personality", "cognitive"]
+
+dependencies = [
+    "numpy>=1.26",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+llm = ["llama-cpp-python>=0.2.90"]
+stt = ["faster-whisper>=1.0"]
+tts = ["kokoro-onnx>=0.3.0", "soundfile>=0.12", "piper-tts>=1.2"]
+vision = ["mediapipe>=0.10.14"]
+vad = ["onnxruntime>=1.17", "torch>=2.1"]
+embeddings = ["onnxruntime>=1.17"]
+obs = ["psutil>=5.9"]
+api = []
+dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.4"]
+
+[project.scripts]
+companion = "companion.interfaces.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+companion = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]

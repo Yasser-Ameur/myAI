@@ -1,0 +1,416 @@
+{
+  "version": 2,
+  "note": "Verified offline model manifest. Install with: companion models install <key>. All sha256 values are real (LFS oids for large artifacts, locally computed for small ones).",
+  "models": {
+    "qwen3-1.7b": {
+      "id": "qwen3-1.7b",
+      "provider": "llama_cpp",
+      "kind": "llm",
+      "format": "gguf",
+      "quantization": "q4_k_m",
+      "source": "https://huggingface.co/ggml-org/Qwen3-1.7B-GGUF",
+      "license": "Apache-2.0",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "it",
+        "pt",
+        "zh",
+        "ja",
+        "ar",
+        "ru"
+      ],
+      "capabilities": [
+        "chat",
+        "streaming",
+        "json_schema",
+        "multilingual"
+      ],
+      "estimated_ram_mb": 1700,
+      "size_bytes": 1282439264,
+      "files": [
+        {
+          "name": "qwen3-1.7b.gguf",
+          "role": "model",
+          "url": "https://huggingface.co/ggml-org/Qwen3-1.7B-GGUF/resolve/main/Qwen3-1.7B-Q4_K_M.gguf",
+          "sha256": "d2387ca2dbfee2ffabce7120d3770dadca0b293052bc2f0e138fdc940d9bc7b5",
+          "size_bytes": 1282439264
+        }
+      ]
+    },
+    "qwen3-0.6b": {
+      "id": "qwen3-0.6b",
+      "provider": "llama_cpp",
+      "kind": "llm",
+      "format": "gguf",
+      "quantization": "q4_0",
+      "source": "https://huggingface.co/ggml-org/Qwen3-0.6B-GGUF",
+      "license": "Apache-2.0",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "it",
+        "pt",
+        "zh",
+        "ja",
+        "ar",
+        "ru"
+      ],
+      "capabilities": [
+        "chat",
+        "streaming",
+        "json_schema",
+        "multilingual"
+      ],
+      "estimated_ram_mb": 900,
+      "size_bytes": 428970080,
+      "files": [
+        {
+          "name": "qwen3-0.6b.gguf",
+          "role": "model",
+          "url": "https://huggingface.co/ggml-org/Qwen3-0.6B-GGUF/resolve/main/Qwen3-0.6B-Q4_0.gguf",
+          "sha256": "da2572f16c06133561ce56accaa822216f2391ef4d37fba427801cd6736417d4",
+          "size_bytes": 428970080
+        }
+      ]
+    },
+    "qwen3-4b": {
+      "id": "qwen3-4b",
+      "provider": "llama_cpp",
+      "kind": "llm",
+      "format": "gguf",
+      "quantization": "q4_k_m",
+      "source": "https://huggingface.co/ggml-org/Qwen3-4B-GGUF",
+      "license": "Apache-2.0",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "it",
+        "pt",
+        "zh",
+        "ja",
+        "ar",
+        "ru"
+      ],
+      "capabilities": [
+        "chat",
+        "streaming",
+        "json_schema",
+        "multilingual"
+      ],
+      "estimated_ram_mb": 3200,
+      "size_bytes": 2497280640,
+      "files": [
+        {
+          "name": "qwen3-4b.gguf",
+          "role": "model",
+          "url": "https://huggingface.co/ggml-org/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf",
+          "sha256": "ab27b9bfa375a178d6cba48f3ad892b94b7739659dcc7aae8058ce0ffed6b328",
+          "size_bytes": 2497280640
+        }
+      ]
+    },
+    "whisper-base": {
+      "id": "whisper-base",
+      "provider": "whisper",
+      "kind": "stt",
+      "format": "ct2",
+      "quantization": "int8",
+      "source": "https://huggingface.co/Systran/faster-whisper-base",
+      "license": "MIT",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "it",
+        "pt",
+        "zh",
+        "ja"
+      ],
+      "capabilities": [
+        "streaming",
+        "multilingual",
+        "language_detection",
+        "timestamps"
+      ],
+      "estimated_ram_mb": 700,
+      "size_bytes": 147483901,
+      "files": [
+        {
+          "name": "model.bin",
+          "role": "model",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/main/model.bin",
+          "sha256": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+          "size_bytes": 145217532
+        },
+        {
+          "name": "config.json",
+          "role": "config",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/main/config.json",
+          "sha256": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+          "size_bytes": 2309
+        },
+        {
+          "name": "tokenizer.json",
+          "role": "tokenizer",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/main/tokenizer.json",
+          "sha256": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+          "size_bytes": 2203239
+        },
+        {
+          "name": "vocabulary.txt",
+          "role": "vocabulary",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/main/vocabulary.txt",
+          "sha256": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913",
+          "size_bytes": 459861
+        }
+      ]
+    },
+    "whisper-tiny": {
+      "id": "whisper-tiny",
+      "provider": "whisper",
+      "kind": "stt",
+      "format": "ct2",
+      "quantization": "int8",
+      "source": "https://huggingface.co/Systran/faster-whisper-tiny",
+      "license": "MIT",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "it",
+        "pt",
+        "zh",
+        "ja"
+      ],
+      "capabilities": [
+        "streaming",
+        "multilingual",
+        "language_detection",
+        "timestamps"
+      ],
+      "estimated_ram_mb": 450,
+      "size_bytes": 77781327,
+      "files": [
+        {
+          "name": "model.bin",
+          "role": "model",
+          "url": "https://huggingface.co/Systran/faster-whisper-tiny/resolve/main/model.bin",
+          "sha256": "dcb76c6586fc06cbdac6dd21f14cfd129cc4cdd9dce19bf4ffa62e59cbe6e6d1",
+          "size_bytes": 75538270
+        },
+        {
+          "name": "config.json",
+          "role": "config",
+          "url": "https://huggingface.co/Systran/faster-whisper-tiny/resolve/main/config.json",
+          "sha256": "",
+          "size_bytes": 2249
+        },
+        {
+          "name": "tokenizer.json",
+          "role": "tokenizer",
+          "url": "https://huggingface.co/Systran/faster-whisper-tiny/resolve/main/tokenizer.json",
+          "sha256": "",
+          "size_bytes": 2203239
+        },
+        {
+          "name": "vocabulary.txt",
+          "role": "vocabulary",
+          "url": "https://huggingface.co/Systran/faster-whisper-tiny/resolve/main/vocabulary.txt",
+          "sha256": "",
+          "size_bytes": 459861
+        }
+      ]
+    },
+    "whisper-small": {
+      "id": "whisper-small",
+      "provider": "whisper",
+      "kind": "stt",
+      "format": "ct2",
+      "quantization": "int8",
+      "source": "https://huggingface.co/Systran/faster-whisper-small",
+      "license": "MIT",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "it",
+        "pt",
+        "zh",
+        "ja"
+      ],
+      "capabilities": [
+        "streaming",
+        "multilingual",
+        "language_detection",
+        "timestamps"
+      ],
+      "estimated_ram_mb": 1300,
+      "size_bytes": 486584372,
+      "files": [
+        {
+          "name": "model.bin",
+          "role": "model",
+          "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/main/model.bin",
+          "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671",
+          "size_bytes": 483546902
+        },
+        {
+          "name": "config.json",
+          "role": "config",
+          "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/main/config.json",
+          "sha256": "",
+          "size_bytes": 2370
+        },
+        {
+          "name": "tokenizer.json",
+          "role": "tokenizer",
+          "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/main/tokenizer.json",
+          "sha256": "",
+          "size_bytes": 2203239
+        },
+        {
+          "name": "vocabulary.txt",
+          "role": "vocabulary",
+          "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/main/vocabulary.txt",
+          "sha256": "",
+          "size_bytes": 459861
+        }
+      ]
+    },
+    "kokoro-82m": {
+      "id": "kokoro-82m",
+      "provider": "kokoro",
+      "kind": "tts",
+      "format": "onnx",
+      "quantization": "fp32",
+      "source": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0",
+      "license": "Apache-2.0",
+      "languages": [
+        "en",
+        "fr",
+        "de",
+        "es",
+        "ja",
+        "zh"
+      ],
+      "capabilities": [
+        "streaming",
+        "multilingual",
+        "prosody"
+      ],
+      "estimated_ram_mb": 500,
+      "size_bytes": 353746785,
+      "files": [
+        {
+          "name": "kokoro-v1.0.onnx",
+          "role": "model",
+          "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx",
+          "sha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+          "size_bytes": 325532387
+        },
+        {
+          "name": "voices-v1.0.bin",
+          "role": "voices",
+          "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin",
+          "sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+          "size_bytes": 28214398
+        }
+      ]
+    },
+    "silero-vad": {
+      "id": "silero-vad",
+      "provider": "silero",
+      "kind": "vad",
+      "format": "onnx",
+      "quantization": "fp32",
+      "source": "https://github.com/snakers4/silero-vad",
+      "license": "MIT",
+      "languages": [
+        "multilingual"
+      ],
+      "capabilities": [
+        "speech_segmentation"
+      ],
+      "estimated_ram_mb": 60,
+      "size_bytes": 2327524,
+      "files": [
+        {
+          "name": "silero_vad.onnx",
+          "role": "model",
+          "url": "https://github.com/snakers4/silero-vad/raw/v5.1.2/src/silero_vad/data/silero_vad.onnx",
+          "sha256": "2623a2953f6ff3d2c1e61740c6cdb7168133479b267dfef114a4a3cc5bdd788f",
+          "size_bytes": 2327524
+        }
+      ]
+    },
+    "face-landmarker": {
+      "id": "face-landmarker",
+      "provider": "mediapipe",
+      "kind": "vision",
+      "format": "tflite",
+      "quantization": "float16",
+      "source": "https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker",
+      "license": "Apache-2.0",
+      "languages": [],
+      "capabilities": [
+        "face_landmarks",
+        "blendshapes",
+        "head_pose"
+      ],
+      "estimated_ram_mb": 250,
+      "size_bytes": 3758596,
+      "files": [
+        {
+          "name": "face_landmarker.task",
+          "role": "model",
+          "url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+          "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff",
+          "size_bytes": 3758596
+        }
+      ]
+    },
+    "bge-small-en": {
+      "id": "bge-small-en",
+      "provider": "onnx",
+      "kind": "embeddings",
+      "format": "onnx",
+      "quantization": "fp32",
+      "source": "https://huggingface.co/Xenova/bge-small-en-v1.5",
+      "license": "MIT",
+      "languages": [
+        "en"
+      ],
+      "capabilities": [
+        "semantic_search"
+      ],
+      "estimated_ram_mb": 300,
+      "size_bytes": 133805174,
+      "files": [
+        {
+          "name": "model.onnx",
+          "role": "model",
+          "url": "https://huggingface.co/Xenova/bge-small-en-v1.5/resolve/main/onnx/model.onnx",
+          "sha256": "828e1496d7fabb79cfa4dcd84fa38625c0d3d21da474a00f08db0f559940cf35",
+          "size_bytes": 133093490
+        },
+        {
+          "name": "tokenizer.json",
+          "role": "tokenizer",
+          "url": "https://huggingface.co/Xenova/bge-small-en-v1.5/resolve/main/tokenizer.json",
+          "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+          "size_bytes": 711396
+        }
+      ]
+    }
+  }
+}
